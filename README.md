@@ -6,7 +6,9 @@
 
 OmniSharp is a .NET development platform based on [Roslyn](https://github.com/dotnet/roslyn) workspaces. It provides project dependencies and C# language services to various IDEs and plugins.
 
-OmniSharp is built with the [.NET Core SDK](https://dot.net/) on Windows and [Mono](http://www.mono-project.com/) on OSX/Linux. It targets both the _net6.0_ and _net472_ target frameworks. The _net6.0_ build requires a .NET SDK version _>=6.0_. When using the _net472_ build on OSX/Linux, _Mono_ version _>=6.4.0_ is required and must be globally installed on the system.
+OmniSharp is built with the [.NET Core SDK](https://dot.net/) on Windows and Haiku and [Mono](http://www.mono-project.com/) on OSX/Linux. It targets both the _net6.0_ and _net472_ target frameworks. The _net6.0_ build requires a .NET SDK version _>=6.0_. When using the _net472_ build on OSX/Linux, _Mono_ version _>=6.4.0_ is required and must be globally installed on the system.
+
+Under Haiku the only target frameworks available are 8.0 and 9.0 preview, OmniSharp is patched to compile against 8.
 
 For Arch Linux users, you need package [mono-msbuild](https://archlinux.org/packages/extra/x86_64/mono-msbuild/) (>= 16.3).
 
@@ -61,6 +63,24 @@ Every merge to `master` is automatically published to this feed and individual r
 > ./build.ps1
 ```
 
+**On Haiku**:
+
+Cake does not work properly under Haiku but OmniSharp can be built directly from the root with:
+
+```
+dotnet build
+```
+
+You can find the the artifacts under `bin/Debug/OmniSharp.Stdio.Driver/net8.0`.
+Note: the OmniSharp executable crashes, sometimes with a kernel panic so please run with
+
+```
+dotnet OmniSharp.dll
+```
+
+Copy the content of `bin/Debug/OmniSharp.Stdio.Driver/net8.0` to your destination of choice (e.g.
+`/boot/system/non-packaged/bin/OmniSharp`) and add the folder to environment PATH.
+
 **On Linux / Unix**:
 
 ```
@@ -72,6 +92,12 @@ You can find the output under `artifacts/publish/OmniSharp/<runtime id>/<target 
 The executable is either `OmniSharp.exe` or `OmniSharp`.
 
 For more details, see [Build](https://github.com/OmniSharp/omnisharp-roslyn/blob/master/BUILD.md).
+
+### Genio (Haiku)
+
+OmniSharp experimental support has been added to the development branch (main). The path is
+currently hardcoded to `/boot/system/non-packaged/bin/OmniSharp`, OmniSharp will automatically start
+when a .cs/.csproj/.cake/.sln file is open. No further configuration is required.
 
 ### VS Code
 
