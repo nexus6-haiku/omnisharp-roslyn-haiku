@@ -114,7 +114,9 @@ namespace OmniSharp.Stdio
                 new Lazy<EndpointHandler>(
                     () => new GenericEndpointHandler(x =>
                     {
+#pragma warning disable VSTHRD103 // Dispose synchronously blocks. Await DisposeAsync instead.
                         _cancellationTokenSource.Cancel();
+#pragma warning restore VSTHRD103
                         return Task.FromResult<object>(null);
                     }))
             );
